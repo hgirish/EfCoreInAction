@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,12 +46,48 @@ namespace MyFirstEfCoreApp
 
         internal static void ListAllWithLogs()
         {
-            throw new NotImplementedException();
+            var logs = new List<string>();
+            using (var db = new AppDbContext())
+            {
+                var serviceProvider = db.GetInfrastructure();
+                var loggerFactory = (ILoggerFactory)serviceProvider.GetService(typeof(ILoggerFactory));
+                loggerFactory.AddProvider(new MyLogProvider(logs));
+
+                var books = db.Books.AsNoTracking().Include(book => book.Author);
+                foreach (var entity in books)
+                {
+                    var webUrl = entity.Author.WebUrl == null
+                        ? "- no web url given -"
+                        : entity.Author.WebUrl;
+                    Console.WriteLine($"{entity.Title} by {entity.Author.Name}");
+                    Console.WriteLine($"Published on {entity.PublishedOn:dd:MMM:yyyy}. {webUrl}");
+                }
+            }
+            Console.WriteLine("------ LOGS --- ");
+            foreach (var log in logs)
+            {
+                Console.WriteLine(log);
+            }
         }
 
         internal static void ChangeWebUrlWithLogs()
         {
-            throw new NotImplementedException();
+            var logs = new List<string>();
+            Console.WriteLine("New Quantum Networking WebUrl >");
+            var newWebUrl = Console.ReadLine();
+
+            using (var db = new AppDbContext())
+            {
+                var serviceProvider = db.GetInfrastructure();
+                var loggerFactory = (ILoggerFactory)serviceProvider.GetService(typeof(ILoggerFactory));
+                loggerFactory.AddProvider(new MyLogProvider(logs));
+
+                var singleBook = db.Books.Include(book => book.Author)
+                    .Single(b => b.Title == "Quantum Networking");
+                singleBook.Author.WebUrl = newWebUrl;
+                db.SaveChanges();
+                Console.WriteLine("... SaveChanges called.");
+            }
         }
 
         internal static void ListAll()

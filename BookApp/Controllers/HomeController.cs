@@ -22,10 +22,10 @@ namespace BookApp.Controllers
 
             var bookList = await listService.SortFilterPage(options).ToListAsync();
 
-
             var dto = new BookListCombinedDto(options, bookList);
 
             SetupTraceInfo();
+
 
             return View(dto);
         }

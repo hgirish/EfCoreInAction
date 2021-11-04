@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ServiceLayer.DatabaseServices;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,11 +24,14 @@ namespace BookApp.HelperExtensions
                 try
                 {
                     var arePendingMigrations = context.Database.GetPendingMigrations().Any();
-                    await context.Database.MigrateAsync();
+                    
+                    Console.WriteLine($"Pending Migrations: {arePendingMigrations}");
                     if (arePendingMigrations)
                     {
-                        await context.SeedDatabaseIfNoBooksAsync(env.WebRootPath);
+                        await context.Database.MigrateAsync();
+                        
                     }
+                    await context.SeedDatabaseIfNoBooksAsync(env.WebRootPath);
                 }
                 catch (Exception ex)
                 {

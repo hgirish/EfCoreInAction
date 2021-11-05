@@ -1,4 +1,4 @@
-﻿var BookList = (function ($) {
+﻿var BookList = (function ($, loggingDisplay) {
     // 
     var filterApiUrl = null;
 
@@ -28,7 +28,7 @@
             })
                 .done(function (indentAndResult) {
                     if (!ignoreTrace) {
-                        //
+                        loggingDisplay.newTrace(indentAndResult.traceIdentifier, indentAndResult.numLogs);
                     }
                     $fsearch
                         .find('option')
@@ -73,4 +73,4 @@
             loadFilterValueDropdown(filterByValue, filterValue);
         }
     }
-}(window.jQuery))
+}(window.jQuery, LoggingDisplay))

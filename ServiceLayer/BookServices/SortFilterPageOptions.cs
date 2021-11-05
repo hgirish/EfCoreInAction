@@ -27,20 +27,22 @@ namespace ServiceLayer.BookServices
             set => _pageSize = value; 
         }
         public int NumPages { get; private set; }
-        public string PreCheckState { get; set; }
-
+        public string PrevCheckState { get; set; }
 
         public void SetupRestOfDto<T>(IQueryable<T> query)
         {
+            
+           
             NumPages = (int)Math.Ceiling((double)query.Count() / PageSize);
             PageNum = Math.Min(Math.Max(1, PageNum), NumPages);
-
+            
             var newCheckState = GenerateCheckState();
-            if (PreCheckState != newCheckState)
+            if (PrevCheckState != newCheckState)
             {
                 PageNum = 1;
             }
-            PreCheckState = newCheckState;
+            PrevCheckState = newCheckState;
+            
         }
 
         private string GenerateCheckState()

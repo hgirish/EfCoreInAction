@@ -25,7 +25,6 @@ namespace BookApp.HelperExtensions
                 {
                     var arePendingMigrations = context.Database.GetPendingMigrations().Any();
                     
-                    Console.WriteLine($"Pending Migrations: {arePendingMigrations}");
                     if (arePendingMigrations)
                     {
                         await context.Database.MigrateAsync();

@@ -56,12 +56,13 @@
         },
 
         sendForm: function (inputElem) {
+            
             sendForm(inputElem);
         },
 
         filterByHasChanged: function (filterElem) {
             var filterByValue = $(filterElem).find(":selected").val();
-            console.log(filterByValue);
+            
             loadFilterValueDropdown(filterByValue);
             if (filterByValue === "0") {
                 sendForm(filterElem);

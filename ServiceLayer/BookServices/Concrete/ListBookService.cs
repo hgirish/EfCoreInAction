@@ -23,7 +23,6 @@ namespace ServiceLayer.BookServices.Concrete
                 .MapBookToDto()
                 .OrderBooksBy(options.OrderByOptions)
                 .FilterBooksBy(options.FilterBy, options.FilterValue);
-
             options.SetupRestOfDto(booksQuery);
             return booksQuery.Page(options.PageNum - 1, options.PageSize);
         }

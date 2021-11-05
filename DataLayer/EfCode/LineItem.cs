@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.EfCode
 {
@@ -11,6 +12,7 @@ namespace DataLayer.EfCode
         [Range(1,5,ErrorMessage ="This order is over the limit of 5 books")]
         public byte LineNum { get; set; }
         public short NumBooks { get; set; }
+        [Column(TypeName = "decimal(18,4)")]
         public decimal BookPrice { get; set; }
 
         public int OrderId { get; set; }

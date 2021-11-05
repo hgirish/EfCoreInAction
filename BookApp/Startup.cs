@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,7 +36,7 @@ namespace BookApp
 
             services.AddDbContext<EfCoreContext>(options =>
             {
-                options.UseSqlServer(connection);
+                options.UseSqlServer(connection);//.ConfigureWarnings(w => w.Log(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
             services.AddHttpContextAccessor();
@@ -43,11 +44,13 @@ namespace BookApp
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env,
             ILoggerFactory loggerFactory,
             IHttpContextAccessor httpContextAccessor)
         {
             //loggerFactory.AddProvider(new RequestTransientLogger(() => httpContextAccessor));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

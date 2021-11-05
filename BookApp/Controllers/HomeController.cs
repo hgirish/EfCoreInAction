@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.BookServices;
 using ServiceLayer.BookServices.Concrete;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookApp.Controllers
@@ -28,6 +29,18 @@ namespace BookApp.Controllers
 
 
             return View(dto);
+        }
+
+        [HttpGet]
+        public JsonResult GetFilterSearchContent(SortFilterPageOptions options)
+        {
+            var service = new BookFilterDropdownService(_context);
+
+            var traceIdent = HttpContext.TraceIdentifier;
+
+            return Json(new TraceIdentGeneric<IEnumerable<DropdownTuple>>(traceIdent, service.GetFilterDropdownValues(options.FilterBy)));
+
+
         }
     }
 }

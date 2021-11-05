@@ -22,4 +22,5 @@ namespace ServiceLayer.BookServices
         public string[] TagStrings { get; set; }
 
     }
+
 }

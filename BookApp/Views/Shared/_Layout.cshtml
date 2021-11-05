@@ -60,6 +60,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <partial name="LogModal" />
         </main>
     </div>
 
@@ -74,6 +75,7 @@
     <environment names="Development">
         <script src="~/lib/jquery/jquery.min.js"></script>
         <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+        <script src="~/js/loggingDisplay.js"></script>
         <script src="~/js/bookList.js"></script>
     </environment>
     <environment names="Staging,Production">
@@ -91,7 +93,13 @@
     @RenderSection("Scripts", required:false)
 
     <script type="text/javascript">
-        // javascript
+        document.addEventListener("DOMContentLoaded",
+            function (event) {
+                var numLogs = @(ViewData["NumLogs"] ?? 0);
+                if (numLogs > 0) {
+                    LoggingDisplay.initialise('@Url.Action("GetLog","Logger")', '@ViewData["TraceIdent"]', numLogs);
+                }
+            })
     </script>
 </body>
 </html>

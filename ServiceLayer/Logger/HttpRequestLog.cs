@@ -66,7 +66,7 @@ namespace ServiceLayer.Logger
             return $"At time: {LastAccessed:s}, Logs : {string.Join("/n", _requestLogs.Select(x => x.ToString()))}";
         }
 
-        internal static HttpRequestLog GetHttpRequestLog(string traceIdentifier)
+        public static HttpRequestLog GetHttpRequestLog(string traceIdentifier)
         {
             HttpRequestLog result;
             if (AllHtppRequestLogs.TryGetValue(traceIdentifier, out result))

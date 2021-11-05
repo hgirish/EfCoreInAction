@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.BookServices;
 using ServiceLayer.BookServices.Concrete;
+using ServiceLayer.Logger;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ namespace BookApp.Controllers
 
             var traceIdent = HttpContext.TraceIdentifier;
 
-            return Json(new TraceIdentGeneric<IEnumerable<DropdownTuple>>(traceIdent, service.GetFilterDropdownValues(options.FilterBy)));
+            return Json(new TraceIndentGeneric<IEnumerable<DropdownTuple>>(traceIdent, service.GetFilterDropdownValues(options.FilterBy)));
 
 
         }

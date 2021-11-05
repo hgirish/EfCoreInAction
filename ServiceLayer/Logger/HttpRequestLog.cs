@@ -26,6 +26,7 @@ namespace ServiceLayer.Logger
         {
             TraceIdentifier = traceIdentifier;
             LastAccessed = DateTime.UtcNow;
+            _requestLogs = new List<LogParts>();
 
             ClearOldLogs(MaxKeepLogMinutes);
 

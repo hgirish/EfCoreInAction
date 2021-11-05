@@ -37,8 +37,8 @@
                         .append($('<option></option>')
                             .attr('value', '')
                             .text('Select filter...'));
-
-                    indentAndResult.result.foreach(function (arrayElem) {
+                    
+                    indentAndResult.result.forEach(function (arrayElem) {
                         $fsearch.append($("<option></option>").attr("value", arrayElem.value).text(arrayElem.text));
                     });
                     $fsearch.val(filterByValue);
@@ -52,7 +52,7 @@
     return {
         initialise: function (filterByValue, filterValue, exFilterApiUrl) {
             filterApiUrl = exFilterApiUrl;
-            console.log(filterByValue, filterValue,filterApiUrl);
+            loadFilterValueDropdown(filterByValue, filterValue, true);
         },
 
         sendForm: function (inputElem) {

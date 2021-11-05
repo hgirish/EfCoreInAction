@@ -6,6 +6,49 @@
         var form = $(inputElem).parents('form');
         form.submit();
     }
+
+    function enableDisableFilterDropdown($fsearch, enable) {
+        var $fvGroup = $('#filter-value-group');
+        if (enable) {
+            $fsearch.prop('disabled', false);
+            $fvGroup.removeClass('dim-filter-value');
+        } else {
+            $fsearch.prop('disabled', true);
+            $fvGroup.addClass('dim-filter-value');
+        }
+    }
+    function loadFilterValueDropdown(filterByValue, filterValue, ignoreTrace) {
+        filterValue = filterValue || '';
+        var $fsearch = $('#filter-value-dropdown');
+        enableDisableFilterDropdown($fsearch, false);
+        if (filterByValue !== "NoFilter") {
+            $.ajax({
+                url: filterApiUrl,
+                data: { FilterBy: filterByValue }
+            })
+                .done(function (indentAndResult) {
+                    if (!ignoreTrace) {
+                        //
+                    }
+                    $fsearch
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append($('<option></option>')
+                            .attr('value', '')
+                            .text('Select filter...'));
+
+                    indentAndResult.result.foreach(function (arrayElem) {
+                        $fsearch.append($("<option></option>").attr("value", arrayElem.value).text(arrayElem.text));
+                    });
+                    $fsearch.val(filterByValue);
+                    enableDisableFilterDropdown($fsearch, true);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        }
+    }
     return {
         initialise: function (filterByValue, filterValue, exFilterApiUrl) {
             filterApiUrl = exFilterApiUrl;
@@ -14,6 +57,19 @@
 
         sendForm: function (inputElem) {
             sendForm(inputElem);
+        },
+
+        filterByHasChanged: function (filterElem) {
+            var filterByValue = $(filterElem).find(":selected").val();
+            console.log(filterByValue);
+            loadFilterValueDropdown(filterByValue);
+            if (filterByValue === "0") {
+                sendForm(filterElem);
+            }
+        },
+
+        loadFilterValueDropdown: function (filterByValue, filterValue) {
+            loadFilterValueDropdown(filterByValue, filterValue);
         }
     }
 }(window.jQuery))

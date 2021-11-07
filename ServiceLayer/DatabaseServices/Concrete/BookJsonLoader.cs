@@ -67,7 +67,7 @@ namespace ServiceLayer.DatabaseServices.Concrete
             return book;
         }
 
-        private static ICollection<Review> CalculateReviewsToMatch(double averageRating, int ratingsCount)
+        public  static ICollection<Review> CalculateReviewsToMatch(double averageRating, int ratingsCount)
         {
             var reviews = new List<Review>();
             var currentAve = averageRating;

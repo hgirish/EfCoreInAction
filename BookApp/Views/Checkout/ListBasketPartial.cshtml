@@ -1,0 +1,86 @@
+﻿@model System.Collections.Immutable.ImmutableList<ServiceLayer.CheckoutServices.CheckoutItemDto>
+
+<div class="container">
+    @Html.ValidationSummary(false, null, new {@class="text-danager h4"})
+
+    @if (!Model.Any())
+    {
+       <h3>Nothing in your basket yet</h3>
+    }
+    <div class="row">
+        <div class="col-md-8">
+            <h4 class="text-primary">Shopping Cart</h4>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-primary btn-sm btn-block"
+               href="@Url.Action("Index", "Home")">               
+                Continue Shopping
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <hr />
+    </div>
+
+    @{ int i = 0; foreach (var lineItem in Model)
+        {
+            <div class="row">
+                <input id="LineNumZeroStart" name="LineNumZeorStart" 
+                       type="hidden" value="i" />
+                <div class="col-md-2">
+                    <img class="img-fluid" src="@(lineItem.ImageUrl ?? "#")" />
+                </div>
+                <div class="col-md-4">
+                    <h5>
+                        <strong>@lineItem.Title</strong>
+                    </h5>
+                    <small>by</small>&nbsp;@lineItem.AuthorsName
+                </div>
+                <div class="col-md-2 text-right">
+                    <h6>
+                        <strong>
+                            $@($"{lineItem.BookPrice:F}") <span class="text-muted">X</span>
+                        </strong>
+                    </h6>
+                </div>
+            
+            <div class="col-md-2">
+                <a class="btn btn-link btn-warning"
+                   href="@Url.Action("DeleteLineItem", new { lineNum = i })"
+                   >
+                    Remove
+                </a>
+            </div>
+            </div>
+            <hr />
+            i++;
+        }}
+
+@if (Model.Any()) { 
+    <form asp-action="PlaceOrder">
+        <div class="row">
+            <div class="col-md-7">
+                <h5>Terms and Conditions</h5>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" value="true"
+                               name="acceptTandCs"
+                               id="acceptTandCs" />
+                        I understand this is a demo site and I am not really buying these books
+<input type="hidden" value="false" checked name="iAcceptTandCs" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <h4 class="text-right">Total <strong>
+                      $@($"{Model.Sum(x=>x.BookPrice * x.NumBooks):F}")
+                      </strong></h4>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success btn-block">Puchase</button>
+            </div>
+        </div>
+    </form>
+    }
+</div>

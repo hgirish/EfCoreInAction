@@ -1,4 +1,6 @@
-﻿using DataLayer.EfCode;
+﻿using BizLogic.BasketService;
+using BizLogic.Orders;
+using DataLayer.EfCode;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.CheckoutServices.Concrete;
 
@@ -21,7 +23,25 @@ namespace BookApp.Controllers
             SetupTraceInfo();
 
 
-            return View();
+            return View(list);
+        }
+
+        public IActionResult Buy(OrderLineItem itemToBuy)
+        {
+            var cookie = new BasketCookie(
+                HttpContext.Request.Cookies,
+                HttpContext.Response.Cookies
+                );
+            var service = new CheckoutCookieService(cookie.GetValue());
+
+            service.AddLineItem(itemToBuy);
+
+            var cookieOutString = service.EncodeForCookie();
+
+            cookie.AddOrUpdateCookie(cookieOutString);
+
+            SetupTraceInfo();
+            return RedirectToAction("Index");
         }
     }
 }

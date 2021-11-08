@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookApp.Controllers
 {
+
     public class HomeController : BaseTraceController
     {
         private readonly EfCoreContext _context;

@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizLogic", "BizLogic\BizLogic.csproj", "{BEBB7E23-09CD-4484-B382-8A310BDD9962}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizDbAccess", "BizDbAccess\BizDbAccess.csproj", "{A7057D68-1020-4768-B33B-B55614A6ACD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{BEBB7E23-09CD-4484-B382-8A310BDD9962}.Release|x64.Build.0 = Release|Any CPU
 		{BEBB7E23-09CD-4484-B382-8A310BDD9962}.Release|x86.ActiveCfg = Release|Any CPU
 		{BEBB7E23-09CD-4484-B382-8A310BDD9962}.Release|x86.Build.0 = Release|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Debug|x64.Build.0 = Debug|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Debug|x86.Build.0 = Debug|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Release|x64.ActiveCfg = Release|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Release|x64.Build.0 = Release|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Release|x86.ActiveCfg = Release|Any CPU
+		{A7057D68-1020-4768-B33B-B55614A6ACD6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

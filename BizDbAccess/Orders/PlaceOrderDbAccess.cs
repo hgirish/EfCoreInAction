@@ -1,0 +1,34 @@
+﻿using DataLayer.EfClasses;
+using DataLayer.EfCode;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BizDbAccess.Orders
+{
+    public class PlaceOrderDbAccess : IPlaceOrderDbAccess
+    {
+        private readonly EfCoreContext _context;
+
+        public PlaceOrderDbAccess(EfCoreContext context)
+        {
+            _context = context;
+        }
+        public void Add(Order newOrder)
+        {
+            _context.Orders.Add(newOrder);
+        }
+
+        public IDictionary<int, Book> FindBooksByIdsWithPriceOffers(IEnumerable<int> bookIds)
+        {
+            return _context.Books
+                .Where(x => bookIds.Contains(x.BookId))
+                .Include(r => r.Promotion)
+                .ToDictionary(key => key.BookId);
+
+        }
+    }
+}

@@ -43,5 +43,29 @@ namespace BookApp.Controllers
             SetupTraceInfo();
             return RedirectToAction("Index");
         }
+
+        public IActionResult PlaceOrder(bool acceptTandCs)
+        {
+            var service = new PlaceOrderService(
+                HttpContext.Request.Cookies,
+                HttpContext.Response.Cookies, _context);
+            var orderId = service.PlaceOrder(acceptTandCs);
+
+            if (!service.Errors.Any())
+            {
+                return RedirectToAction("ConfirmOrder", "Orders", new { orderId });
+            }
+            foreach (var error in service.Errors)
+            {
+                var properties = error.MemberNames.ToList();
+                ModelState.AddModelError(properties.Any()
+                    ? properties.First()
+                    : "", error.ErrorMessage);
+            }
+            var listService = new CheckoutListService(_context,
+                HttpContext.Request.Cookies);
+            SetupTraceInfo();
+            return View(listService.GetCheckoutList());
+        }
     }
 }

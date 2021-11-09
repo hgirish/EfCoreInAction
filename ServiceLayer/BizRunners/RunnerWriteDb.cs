@@ -16,7 +16,7 @@ namespace ServiceLayer.BizRunners
             _actionClass = actionClass;
             _context = context;
         }
-        public ImmutableList<ValidationResult> Errors => _actionClass.Errors;
+        public IImmutableList<ValidationResult> Errors => _actionClass.Errors;
         public bool HasErrors => _actionClass.HasErrors;
 
         public TOut RunAction(TIn dataIn)
